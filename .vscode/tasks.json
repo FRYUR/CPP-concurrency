@@ -1,0 +1,117 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "TaskForge: Configure Debug",
+      "type": "shell",
+      "command": "cmake",
+      "args": ["--preset", "debug"],
+      "problemMatcher": []
+    },
+    {
+      "label": "TaskForge: Build Debug",
+      "type": "shell",
+      "command": "cmake",
+      "args": ["--build", "--preset", "debug", "--parallel"],
+      "dependsOn": "TaskForge: Configure Debug",
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": "$gcc"
+    },
+    {
+      "label": "TaskForge: Test Debug",
+      "type": "shell",
+      "command": "ctest",
+      "args": ["--preset", "debug"],
+      "dependsOn": "TaskForge: Build Debug",
+      "group": { "kind": "test", "isDefault": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "TaskForge: Configure Release",
+      "type": "shell",
+      "command": "cmake",
+      "args": ["--preset", "release"],
+      "problemMatcher": []
+    },
+    {
+      "label": "TaskForge: Build Release",
+      "type": "shell",
+      "command": "cmake",
+      "args": ["--build", "--preset", "release", "--parallel"],
+      "dependsOn": "TaskForge: Configure Release",
+      "group": "build",
+      "problemMatcher": "$gcc"
+    },
+    {
+      "label": "TaskForge: Test Release",
+      "type": "shell",
+      "command": "ctest",
+      "args": ["--preset", "release"],
+      "dependsOn": "TaskForge: Build Release",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "TaskForge: Configure ASan",
+      "type": "shell",
+      "command": "cmake",
+      "args": ["--preset", "asan"],
+      "problemMatcher": []
+    },
+    {
+      "label": "TaskForge: Build ASan",
+      "type": "shell",
+      "command": "cmake",
+      "args": ["--build", "--preset", "asan", "--parallel"],
+      "dependsOn": "TaskForge: Configure ASan",
+      "group": "build",
+      "problemMatcher": "$gcc"
+    },
+    {
+      "label": "TaskForge: Test ASan",
+      "type": "shell",
+      "command": "ctest",
+      "args": ["--preset", "asan"],
+      "dependsOn": "TaskForge: Build ASan",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "TaskForge: Build TSan",
+      "type": "shell",
+      "command": "cmake",
+      "args": ["--build", "--preset", "tsan", "--parallel"],
+      "dependsOn": "TaskForge: Configure TSan",
+      "group": "build",
+      "problemMatcher": "$gcc"
+    },
+    {
+      "label": "TaskForge: Configure TSan",
+      "type": "shell",
+      "command": "cmake",
+      "args": ["--preset", "tsan"],
+      "problemMatcher": []
+    },
+    {
+      "label": "TaskForge: Test TSan",
+      "type": "shell",
+      "command": "ctest",
+      "args": ["--preset", "tsan"],
+      "dependsOn": "TaskForge: Build TSan",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "TaskForge: Run Benchmarks",
+      "type": "shell",
+      "command": "${workspaceFolder}/build/release/taskforge_benchmarks",
+      "args": [
+        "--benchmark_min_warmup_time=0.25",
+        "--benchmark_min_time=0.5",
+        "--benchmark_repetitions=5"
+      ],
+      "dependsOn": "TaskForge: Build Release",
+      "problemMatcher": []
+    }
+  ]
+}
